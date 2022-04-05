@@ -1,41 +1,90 @@
-const express = require('express');
-// const db = require('./db/connection');
-// const apiRoutes = require('./routes/apiRoutes');
-// const inputCheck = require('../../utils/inputCheck');
-const router = express.Router();
-const PORT = process.env.PORT || 3001;
-const app = express();
+const inquirer = require('inquirer');
+const db = require('./db/connection');
 
 
-// ADD an Employee
 
+//Start server after DB connection
+db.connect((err) => {
+  if (err) throw err;
+  console.log('Database connected.');
+  
+  // excute separate function that asks the user question
 
-// // Express middleware
-// app.use(express.urlencoded({ extended: false }));
-// app.use(express.json());
+  askQuestions();
 
-// // Use apiRoutes
-// app.use('/api', apiRoutes);
+});
 
-// // Default response for any other request (Not Found)
-// app.use((req, res) => {
-//   res.status(404).end();
-// });
+// Ask questions function
+const askQuestions = () => {
+  inquirer.prompt({
+    name: 'choice',
+    type: 'list',
+    message: 'What would you like to do?',
+    choices: [
+      'View Departments',
+      'View Roles',
+      'View Employees',
+      'Add a Department', 
+      'Add a role',
+      'Add an employee',
+      'Update and employee role',
+      'Exit'
+    ] 
+  })
+    .then((userResponse)=> {
+      console.log(userResponse);
+      // NEED TO EVALUATE THE KEY IN THIS OBJECT
+      // userResponse.choice is the KEY and 'View Departments' is the VALUE!!!!!!! :>(
+      if(userResponse.choice === 'View Departments') {
+          db.query(
+            'SELECT * FROM department', 
+            (err, res) => {
+              if (res) {
+                // console.log('department information')
+                // I just want to log the name of each department. Not all the other stuff. 'name' is the key I want to access
+                res.forEach((response) => 
+                // db.query(
+                //   'SELECT * FROM department'
+                // ))
+                console.log(response.db_department))
+                //console.log(res)
+              } else {
+                console.log('Error!')
+              }
+            }
+          )
+      } else if (userResponse.choice === 'View Roles') {
+        db.query(
+          'SELECT * FROM roles', 
+          (err, res) => {
+            if (res) {
+              // console.log('roles information')
+              // I just want to log the title of each role. Not all the other stuff. 'name' is the key I want to access
+              res.forEach((response) => console.log(response.title))
+              //console.log(res)
+            } else {
+              console.log('Error!')
+            }
+          }
+        )
+    } else if (userResponse.choice === 'Exit') {
+      // closing database connection
+      console.log('Closing database connection')
+      db.end();
+    }
+  }); 
+    
+};
 
-
-//NPM server 
-app.listen(3001, () => {
-    console.log(`API server now on port 3001!`);
-  });
-
-
-// Start server after DB connection
-// db.connect(err => {
-//   if (err) throw err;
-//   console.log('Database connected.');
-//   app.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`);
-//   });
-// });
-
-module.exports = router;
+// db.query(
+//   'SELECT * FROM roles', 
+//   (err, res) => {
+//     if (res) {
+//       console.log('roles information')
+//       //res.forEach((response) => console.log(response))
+//       console.log(res)
+//     } else {
+//       console.log('Error!')
+//     }
+//   }
+// )

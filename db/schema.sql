@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS department;
-DROP TABLE IF EXISTS candidates;
-DROP TABLE IF EXISTS parties;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS employee;
 
 
 CREATE TABLE department (
@@ -9,11 +9,11 @@ CREATE TABLE department (
   description TEXT
 );
 
-CREATE TABLE role (
+CREATE TABLE roles (
   id INTEGER PRIMARY KEY,
   title VARCHAR(30) NOT NULL,
   department_id INTEGER,
-  salary DECIMAL NOT NULL,
+  salary DECIMAL NOT NULL
 --   CONSTRAINT fk_party
 --     FOREIGN KEY (party_id)
 --     REFERENCES parties(id)
@@ -25,5 +25,6 @@ CREATE TABLE employee (
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
   role_id INTEGER,
-  manager_id INTEGER,
+  manager_id INTEGER
 );
+
