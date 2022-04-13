@@ -50,6 +50,7 @@ const askQuestions = () => {
                 //console.log(res)
               } else {
                 console.log('Error!')
+                //TEST
               }
             }
           )
