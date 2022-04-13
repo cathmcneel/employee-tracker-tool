@@ -40,17 +40,17 @@ const askQuestions = () => {
             'SELECT * FROM department', 
             (err, res) => {
               if (res) {
-                // console.log('department information')
+                console.table(res)
                 // I just want to log the name of each department. Not all the other stuff. 'name' is the key I want to access
                 res.forEach((response) => 
                 // db.query(
                 //   'SELECT * FROM department'
                 // ))
-                console.log(response.db_department))
+                console.log(response.name))
                 //console.log(res)
               } else {
                 console.log('Error!')
-                //TEST
+              
               }
             }
           )
@@ -59,16 +59,32 @@ const askQuestions = () => {
           'SELECT * FROM roles', 
           (err, res) => {
             if (res) {
-              // console.log('roles information')
+              console.table(res)
+         
               // I just want to log the title of each role. Not all the other stuff. 'name' is the key I want to access
-              res.forEach((response) => console.log(response.title))
+             // res.forEach((response) => console.log(response.title))
               //console.log(res)
             } else {
               console.log('Error!')
             }
           }
         )
-    } else if (userResponse.choice === 'Exit') {
+    }else if (userResponse.choice === 'View Employees') {
+      db.query(
+        'SELECT * FROM employee', 
+        (err, res) => {
+          if (res) {
+            console.table(res)
+       
+            // I just want to log the title of each role. Not all the other stuff. 'name' is the key I want to access
+           // res.forEach((response) => console.log(response.title))
+            //console.log(res)
+          } else {
+            console.log('Error!')
+          }
+        }
+      )
+      } else if (userResponse.choice === 'Exit') {
       // closing database connection
       console.log('Closing database connection')
       db.end();
