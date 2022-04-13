@@ -1,7 +1,6 @@
 const inquirer = require('inquirer');
+//const Connection = require('mysql2/typings/mysql/lib/Connection');
 const db = require('./db/connection');
-
-
 
 //Start server after DB connection
 db.connect((err) => {
@@ -69,7 +68,7 @@ const askQuestions = () => {
             }
           }
         )
-    }else if (userResponse.choice === 'View Employees') {
+    } else if (userResponse.choice === 'View Employees') {
       db.query(
         'SELECT * FROM employee', 
         (err, res) => {
@@ -84,7 +83,17 @@ const askQuestions = () => {
           }
         }
       )
-      } else if (userResponse.choice === 'Exit') {
+      } else if (userResponse.choice === 'Add a Department') {
+       inquirer.prompt({
+         name: "newdepartment",
+         type: "input",
+         message: "Add a new department"
+       }).then((response) => {
+         db.query(`INSERT INTO department (name) VALUES ('${ response.newdepartment }')`)
+         console.log('Adding new Department', response.newdepartment)
+       })
+
+        } else if (userResponse.choice === 'Exit') {
       // closing database connection
       console.log('Closing database connection')
       db.end();
