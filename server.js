@@ -93,7 +93,25 @@ const askQuestions = () => {
          console.log('Adding new Department', response.newdepartment)
        })
 
-        } else if (userResponse.choice === 'Exit') {
+        }  else if (userResponse.choice === 'Add a role') {
+          inquirer.prompt({
+            name: "newrole",
+            type: "input",
+            message: "Add a new role"
+          }).then((response) => {
+            db.query(`INSERT INTO roles (name) VALUES ('${ response.newrole }')`)
+            console.log('Adding new Role', response.newrole)
+          })
+        } else if (userResponse.choice === 'Add an employee') {
+          inquirer.prompt({
+            name: "newemployee",
+            type: "input",
+            message: "Add a new employee"
+          }).then((response) => {
+            db.query(`INSERT INTO employee (name) VALUES ('${ response.newemployee }')`)
+            console.log('Adding new Role', response.newemployee)
+          })
+         } else if (userResponse.choice === 'Exit') {
       // closing database connection
       console.log('Closing database connection')
       db.end();
