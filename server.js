@@ -99,7 +99,7 @@ const askQuestions = () => {
             type: "input",
             message: "Add a new role"
           }).then((response) => {
-            db.query(`INSERT INTO roles (name) VALUES ('${ response.newrole }')`)
+            db.query(`INSERT INTO roles VALUES ('${ response.newrole }')`)
             console.log('Adding new Role', response.newrole)
           })
         } else if (userResponse.choice === 'Add an employee') {
