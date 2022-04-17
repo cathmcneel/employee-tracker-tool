@@ -8,4 +8,4 @@
 ### Add departments, roles, and employees to the database
 ### in the future, will be able to sort by salary and employee level
 
-### view a demo video here
+### [View a demo video here](assets/employee-tracker-demo.mp4)
